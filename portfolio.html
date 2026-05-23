@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lazeek Ahamed Kandoth — Robotics Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #F7F5F0;
+    --surface: #EFEDE6;
+    --border: #D8D4C8;
+    --ink: #1A1916;
+    --ink-soft: #6B6860;
+    --accent: #2D5A3D;
+    --accent-light: #E8F0EB;
+    --accent-warm: #B85C2C;
+    --tag-bg: #E4E0D5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247,245,240,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    height: 64px;
+  }
+  .nav-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── LAYOUT ── */
+  main { padding-top: 64px; }
+  section {
+    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 40px;
+    height: 1px; background: var(--accent);
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: calc(100vh - 64px);
+    display: flex; flex-direction: column; justify-content: center;
+    padding-top: clamp(3rem, 8vw, 6rem);
+    padding-bottom: clamp(3rem, 8vw, 6rem);
+    border-bottom: 1px solid var(--border);
+    opacity: 0; animation: fadeUp 0.9s ease 0.1s forwards;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-tagline {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #1e3f2b; }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--ink); background: var(--surface); }
+
+  /* ── ABOUT ── */
+  #about { border-bottom: 1px solid var(--border); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-bio {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+  }
+  .about-bio p + p { margin-top: 1rem; }
+  .about-bio strong { color: var(--ink); font-weight: 500; }
+  .about-facts { display: flex; flex-direction: column; gap: 1.25rem; }
+  .fact {
+    display: flex; flex-direction: column; gap: 0.2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .fact:last-child { border-bottom: none; padding-bottom: 0; }
+  .fact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .fact-value {
+    font-size: 0.95rem;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* ── SKILLS ── */
+  #skills { border-bottom: 1px solid var(--border); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-group { display: flex; flex-direction: column; gap: 0.75rem; }
+  .skill-group-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    background: var(--tag-bg);
+    color: var(--ink-soft);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.65rem;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { border-bottom: 1px solid var(--border); }
+  .projects-list { display: flex; flex-direction: column; gap: 1.5px; }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem 2rem 1.75rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 24px rgba(45,90,61,0.07);
+  }
+  .project-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--accent);
+    opacity: 0; transition: opacity 0.2s;
+  }
+  .project-card:hover::before { opacity: 1; }
+  .project-header {
+    display: flex; align-items: flex-start;
+    justify-content: space-between; gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+  }
+  .project-status {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .status-wip { background: #FFF3E0; color: #E65100; }
+  .status-done { background: var(--accent-light); color: var(--accent); }
+  .project-desc {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.7;
+  }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  /* ── EDUCATION ── */
+  #education { border-bottom: 1px solid var(--border); }
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem 2rem;
+    align-items: start;
+  }
+  .edu-degree {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--ink);
+    grid-column: 1;
+  }
+  .edu-school {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    grid-column: 1;
+  }
+  .edu-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent);
+    grid-row: 1;
+    grid-column: 2;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* ── CONTACT ── */
+  #contact { }
+  .contact-intro {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-row {
+    display: flex; align-items: center; gap: 1.25rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-row:hover { border-color: var(--accent); background: var(--accent-light); }
+  .contact-row-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    min-width: 60px;
+  }
+  .contact-row-value { font-size: 0.95rem; color: var(--ink-soft); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem clamp(1.5rem, 5vw, 4rem);
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  footer span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .edu-card { grid-template-columns: 1fr; }
+    .edu-year { grid-row: auto; grid-column: 1; text-align: left; }
+    .nav-links { display: none; }
+    footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#hero">LAK</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <p class="hero-eyebrow">Robotics Engineer</p>
+    <h1 class="hero-name">Lazeek<br/><em>Ahamed</em><br/>Kandoth</h1>
+    <p class="hero-tagline">
+      Designing intelligent machines that move, sense, and adapt — 
+      bridging mechanical design with autonomous systems.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label reveal">About Me</p>
+    <div class="about-grid reveal">
+      <div class="about-bio">
+        <p>
+          I'm a <strong>Robotics Engineering student</strong> passionate about 
+          building systems that can perceive the world and act within it. 
+          My work spans mechanical design, embedded systems, and software — 
+          I enjoy working across the full stack of a robot.
+        </p>
+        <p>
+          <!-- Add more about yourself here — interests, research focus, goals -->
+          Currently pursuing my BSc with a focus on autonomous systems and 
+          robot design. Open to internship opportunities and collaborative projects.
+        </p>
+      </div>
+      <div class="about-facts">
+        <div class="fact">
+          <span class="fact-label">Based in</span>
+          <span class="fact-value">Malaysia</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Currently</span>
+          <span class="fact-value">BSc Student — Robotics</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Graduating</span>
+          <span class="fact-value">2027</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Interests</span>
+          <span class="fact-value">Autonomous Systems · Mechatronics · AI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label reveal">Skills &amp; Tech Stack</p>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <span class="skill-group-title">Programming</span>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">C++</span>
+          <span class="tag">MATLAB</span>
+          <!-- Add more -->
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-title">Robotics</span>
+        <div class="skill-tags">
+          <span class="tag">ROS / ROS2</span>
+          <span class="tag">Arduino</span>
+          <span class="tag">Raspberry Pi</span>
+          <!-- Add more -->
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-title">Design & Simulation</span>
+        <div class="skill-tags">
+          <span class="tag">SolidWorks</span>
+          <span class="tag">Gazebo</span>
+          <span class="tag">AutoCAD</span>
+          <!-- Add more -->
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-group-title">Concepts</span>
+        <div class="skill-tags">
+          <span class="tag">Control Systems</span>
+          <span class="tag">Computer Vision</span>
+          <span class="tag">Path Planning</span>
+          <!-- Add more -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label reveal">Projects</p>
+    <div class="projects-list reveal">
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Project Title Here</h3>
+          <span class="project-status status-wip">In Progress</span>
+        </div>
+        <p class="project-desc">
+          Brief description of what this project does, the problem it solves, 
+          and what makes it interesting. 2–3 sentences works well here.
+        </p>
+        <div class="project-tech">
+          <span class="tag">ROS2</span>
+          <span class="tag">Python</span>
+          <span class="tag">OpenCV</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Another Project</h3>
+          <span class="project-status status-done">Completed</span>
+        </div>
+        <p class="project-desc">
+          Describe what you built, what hardware or software was involved, 
+          and what outcome or insight it produced.
+        </p>
+        <div class="project-tech">
+          <span class="tag">Arduino</span>
+          <span class="tag">C++</span>
+          <span class="tag">SolidWorks</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-header">
+          <h3 class="project-title">Third Project</h3>
+          <span class="project-status status-done">Completed</span>
+        </div>
+        <p class="project-desc">
+          Add your third project here. Replace these placeholder cards with 
+          your real work — even university coursework counts!
+        </p>
+        <div class="project-tech">
+          <span class="tag">MATLAB</span>
+          <span class="tag">Simulink</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label reveal">Education</p>
+    <div class="edu-card reveal">
+      <h3 class="edu-degree">BSc in Robotics Design &amp; Development</h3>
+      <span class="edu-year">2024 — 2027</span>
+      <p class="edu-school">
+        University Name Here &nbsp;·&nbsp; Expected Graduation: 2027
+        <!-- Replace with your actual university -->
+      </p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label reveal">Contact</p>
+    <p class="contact-intro reveal">
+      Open to internships, research collaborations, and interesting conversations 
+      about robotics and autonomous systems.
+    </p>
+    <div class="contact-links reveal">
+      <a class="contact-row" href="mailto:lazeekahamed10@gmail.com">
+        <span class="contact-row-label">Email</span>
+        <span class="contact-row-value">lazeekahamed10@gmail.com</span>
+      </a>
+      <a class="contact-row" href="#" target="_blank">
+        <!-- Replace # with your LinkedIn URL -->
+        <span class="contact-row-label">LinkedIn</span>
+        <span class="contact-row-value">linkedin.com/in/your-handle</span>
+      </a>
+      <a class="contact-row" href="#" target="_blank">
+        <!-- Replace # with your GitHub URL -->
+        <span class="contact-row-label">GitHub</span>
+        <span class="contact-row-value">github.com/your-handle</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>Lazeek Ahamed Kandoth</span>
+  <span>Robotics Engineer · 2025</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
